@@ -9,7 +9,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: white;
   background-color: #0f172a;
 }
 
@@ -27,5 +26,20 @@ input {
   border: 2px solid rgb(227, 100, 100);
 }
 #green {
-  background-color: rgba(0, 100, 0, 0.3);
+  background-color: rgba(14, 178, 14, 0.3);
+}
+#red {
+  background-color: rgba(149, 28, 28, 0.3);
+}
+#head {
+  position: fixed;
+  height: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+  #head {
+    width: 100%;
+    position: fixed;
+    height: 5rem;
+  }
 }

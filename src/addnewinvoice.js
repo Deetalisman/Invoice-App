@@ -1,20 +1,44 @@
 import { useFormik } from "formik";
 import { useState } from "react";
 import * as yup from "yup";
-function Addnewinvoice({ invoices, setInvoices, setAddnewinvoice }) {
+function Addnewinvoice({
+  invoices,
+  setInvoices,
+  setAddnewinvoice,
+  isDark,
+  voices,
+  setVoices,
+}) {
   return (
-    <div className="bg-slate-900 h-auto px-10 py-10 absolute top-20 w-full lg:top-0 lg:left-24 lg:w-fit">
-      <h1 className="text-3xl">New Invoice</h1>
+    <div
+      className={
+        "bg-slate-900 h-auto px-10 py-10 absolute top-20 w-full lg:top-0 lg:left-24 lg:w-fit " +
+        (!isDark && "bg-white")
+      }
+    >
+      <h1 className={"text-3xl  " + (!isDark ? "text-black" : "text-white")}>
+        New Invoice
+      </h1>
       <Newinvoice
         setInvoices={setInvoices}
         invoices={invoices}
         setAddnewinvoice={setAddnewinvoice}
+        isDark={isDark}
+        voices={voices}
+        setVoices={setVoices}
       />
     </div>
   );
 }
 
-function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
+function Newinvoice({
+  setInvoices,
+  invoices,
+  setAddnewinvoice,
+  isDark,
+  setVoices,
+  voices,
+}) {
   const basicSchema = yup.object().shape({
     address: yup.string().required("Required"),
     city: yup.string().required("Required"),
@@ -27,7 +51,6 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
     clientpostcode: yup.number().required("Client Postcode"),
     clientcountry: yup.string().required("Client Country"),
     invoicedate: yup.string().required("Required"),
-    payment: yup.string().required("Required"),
     description: yup.string().required("Required"),
     itemname: yup.string().required("Required"),
     itemsquantity: yup.number().required("Required"),
@@ -37,6 +60,7 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
     console.log("submitted");
     console.log(values);
     setInvoices([values, ...invoices]);
+    setVoices([values, ...voices]);
     console.log(invoices);
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     setAddnewinvoice(false);
@@ -62,8 +86,9 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
         itemsprice: "",
         itemstotal: "",
         id: Math.floor(Math.random() * 66666),
+        paid: 0,
       },
-      validationSchema: basicSchema,
+      //validationSchema: basicSchema,
       onSubmit,
     });
 
@@ -85,8 +110,11 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
               onBlur={handleBlur}
               onChange={handleChange}
               className={
-                "w-full bg-slate-800 h-10 rounded-lg mt-2 " +
-                (errors.address && touched.address ? "error" : null)
+                "w-full h-10 rounded-lg mt-2 " +
+                (errors.address && touched.address ? "error" : null) +
+                (!isDark
+                  ? "bg-white border-2 border-slate-400"
+                  : " bg-slate-800")
               }
             />
             {errors.address && touched.address && (
@@ -104,8 +132,11 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 className={
-                  "w-full bg-slate-800 h-10 rounded-lg mt-2 " +
-                  (errors.city && touched.city ? "error" : null)
+                  "w-full  h-10 rounded-lg mt-2 " +
+                  (errors.city && touched.city ? "error" : null) +
+                  (!isDark
+                    ? "bg-white border-2 border-slate-400"
+                    : " bg-slate-800")
                 }
               />
               {errors.city && touched.city && (
@@ -122,8 +153,11 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 className={
-                  "w-full bg-slate-800 h-10 rounded-lg mt-2 " +
-                  (errors.postcode && touched.postcode ? "error" : null)
+                  "w-full h-10 rounded-lg mt-2 " +
+                  (errors.postcode && touched.postcode ? "error" : null) +
+                  (!isDark
+                    ? "bg-white border-2 border-slate-400"
+                    : " bg-slate-800")
                 }
               />
               {errors.postcode && touched.postcode && (
@@ -140,8 +174,11 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 className={
-                  "w-full bg-slate-800 h-10 rounded-lg mt-2 " +
-                  (errors.country && touched.country ? "error" : null)
+                  "w-full  h-10 rounded-lg mt-2 " +
+                  (errors.country && touched.country ? "error" : null) +
+                  (!isDark
+                    ? "bg-white border-2 border-slate-400"
+                    : " bg-slate-800")
                 }
               />
               {errors.country && touched.country && (
@@ -161,8 +198,11 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
               onBlur={handleBlur}
               onChange={handleChange}
               className={
-                "w-full bg-slate-800 h-10 rounded-lg mt-2 mb-5 " +
-                (errors.clientname && touched.clientname ? "error" : null)
+                "w-full  h-10 rounded-lg mt-2 mb-5 " +
+                (errors.clientname && touched.clientname ? "error" : null) +
+                (!isDark
+                  ? "bg-white border-2 border-slate-400"
+                  : " bg-slate-800")
               }
             />
             {errors.clientname && touched.clientname && (
@@ -180,8 +220,11 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
               onBlur={handleBlur}
               onChange={handleChange}
               className={
-                "w-full bg-slate-800 h-10 rounded-lg mt-2 mb-5 " +
-                (errors.clientemail && touched.clientemail ? "error" : null)
+                "w-full  h-10 rounded-lg mt-2 mb-5 " +
+                (errors.clientemail && touched.clientemail ? "error" : null) +
+                (!isDark
+                  ? "bg-white border-2 border-slate-400"
+                  : " bg-slate-800")
               }
             />
             {errors.clientemail && touched.clientemail && (
@@ -199,8 +242,13 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
               onBlur={handleBlur}
               onChange={handleChange}
               className={
-                "w-full bg-slate-800 h-10 rounded-lg mt-2 mb-5 " +
-                (errors.clientaddress && touched.clientaddress ? "error" : null)
+                "w-full h-10 rounded-lg mt-2 mb-5 " +
+                (errors.clientaddress && touched.clientaddress
+                  ? "error"
+                  : null) +
+                (!isDark
+                  ? "bg-white border-2 border-slate-400"
+                  : " bg-slate-800")
               }
             />
             {errors.clientaddress && touched.clientaddress && (
@@ -220,8 +268,11 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 className={
-                  "w-full bg-slate-800 h-10 rounded-lg mt-2 " +
-                  (errors.clientcity && touched.clientcity ? "error" : null)
+                  "w-full h-10 rounded-lg mt-2 " +
+                  (errors.clientcity && touched.clientcity ? "error" : null) +
+                  (!isDark
+                    ? "bg-white border-2 border-slate-400"
+                    : " bg-slate-800")
                 }
               />
               {errors.clientcity && touched.clientcity && (
@@ -240,10 +291,13 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 className={
-                  "w-full bg-slate-800 h-10 rounded-lg mt-2 " +
+                  "w-full  h-10 rounded-lg mt-2 " +
                   (errors.clientpostcode && touched.clientpostcode
                     ? "error"
-                    : null)
+                    : null) +
+                  (!isDark
+                    ? "bg-white border-2 border-slate-400"
+                    : " bg-slate-800")
                 }
               />
               {errors.clientpostcode && touched.clientpostcode && (
@@ -262,10 +316,13 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 className={
-                  "w-full bg-slate-800 h-10 rounded-lg mt-2 " +
+                  "w-full  h-10 rounded-lg mt-2 " +
                   (errors.clientcountry && touched.clientcountry
                     ? "error"
-                    : null)
+                    : null) +
+                  (!isDark
+                    ? "bg-white border-2 border-slate-400"
+                    : " bg-slate-800")
                 }
               />
               {errors.clientcountry && touched.clientcountry && (
@@ -280,14 +337,17 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
               <label className="text-slate-400 text-base">Invoice Date</label>
               <br></br>
               <input
-                type="text"
+                type="date"
                 value={values.invoicedate}
                 id="invoicedate"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 className={
-                  "w-full bg-slate-800 h-10 rounded-lg mt-2 " +
-                  (errors.invoicedate && touched.invoicedate ? "error" : null)
+                  "w-full  h-10 rounded-lg mt-2 " +
+                  (errors.invoicedate && touched.invoicedate ? "error" : null) +
+                  (!isDark
+                    ? "bg-white border-2 border-slate-400"
+                    : " bg-slate-800")
                 }
               />
               {errors.invoicedate && touched.invoicedate && (
@@ -299,17 +359,24 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
             <smalll className="w-2/5">
               <label className="text-slate-400 text-base">Payment Terms</label>
               <br></br>
-              <input
+              <select
                 type="text"
                 value={values.payment}
                 id="payment"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 className={
-                  "w-full bg-slate-800 h-10 rounded-lg mt-2 " +
-                  (errors.payment && touched.payment ? "error" : null)
+                  "w-full  h-10 rounded-lg mt-2 " +
+                  (errors.payment && touched.payment ? "error" : null) +
+                  (!isDark
+                    ? "bg-white border-2 border-slate-400 text-black"
+                    : " bg-slate-800 text-white")
                 }
-              />
+              >
+                <option>Next 7 days</option>
+                <option>Next 20 days</option>
+                <option>Next 30 days</option>
+              </select>
               {errors.payment && touched.payment && (
                 <p className="text-red-300 text-xs text-right">
                   {errors.payment}
@@ -328,8 +395,11 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
               onBlur={handleBlur}
               onChange={handleChange}
               className={
-                "w-full bg-slate-800 h-10 rounded-lg mt-2 mb-5 " +
-                (errors.description && touched.description ? "error" : null)
+                "w-full  h-10 rounded-lg mt-2 mb-5 " +
+                (errors.description && touched.description ? "error" : null) +
+                (!isDark
+                  ? "bg-white border-2 border-slate-400"
+                  : " bg-slate-800")
               }
             />
             {errors.description && touched.description && (
@@ -340,7 +410,13 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
           </small>
         </article>
         <article>
-          <h1 className="text-3xl mb-4">Item List</h1>
+          <h1
+            className={
+              "text-3xl mb-4 " + (!isDark ? "text-black" : "text-white")
+            }
+          >
+            Item List
+          </h1>
           <small className="">
             <label className="text-slate-400 text-lg ">Item Name</label>
             <input
@@ -350,8 +426,11 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
               onBlur={handleBlur}
               onChange={handleChange}
               className={
-                "w-full bg-slate-800 h-10 rounded-lg mt-2 mb-5 " +
-                (errors.itemname && touched.itemname ? "error" : null)
+                "w-full  h-10 rounded-lg mt-2 mb-5 " +
+                (errors.itemname && touched.itemname ? "error" : null) +
+                (!isDark
+                  ? "bg-white border-2 border-slate-400"
+                  : " bg-slate-800")
               }
             />
             {errors.itemname && touched.itemname && (
@@ -361,7 +440,7 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
             )}
           </small>
           <aside className="mt-3 flex justify-between flex-wrap">
-            <smalll className="w-2/5">
+            <smalll className="w-3/12">
               <label className="text-slate-400 text-base">Qty</label>
               <br></br>
               <input
@@ -371,10 +450,13 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 className={
-                  "w-full bg-slate-800 h-10 rounded-lg mt-2 " +
+                  "w-full  h-10 rounded-lg mt-2 " +
                   (errors.itemsquantity && touched.itemsquantity
                     ? "error"
-                    : null)
+                    : null) +
+                  (!isDark
+                    ? "bg-white border-2 border-slate-400"
+                    : " bg-slate-800")
                 }
               />
               {errors.itemsquantity && touched.itemsquantity && (
@@ -383,7 +465,7 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
                 </p>
               )}
             </smalll>
-            <smalll className="w-2/5">
+            <smalll className="w-3/12">
               <label className="text-slate-400 text-base">Price</label>
               <br></br>
               <input
@@ -393,8 +475,11 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 className={
-                  "w-full bg-slate-800 h-10 rounded-lg mt-2 " +
-                  (errors.itemsprice && touched.itemsprice ? "error" : null)
+                  "w-full  h-10 rounded-lg mt-2 " +
+                  (errors.itemsprice && touched.itemsprice ? "error" : null) +
+                  (!isDark
+                    ? "bg-white border-2 border-slate-400"
+                    : " bg-slate-800")
                 }
               />
               {errors.itemsprice && touched.itemsprice && (
@@ -403,7 +488,7 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
                 </p>
               )}
             </smalll>
-            <smalll className="w-2/5 mt-2">
+            <smalll className="w-3/12 ">
               <label className="text-slate-400 text-base">Total</label>
               <br></br>
               <input
@@ -415,28 +500,52 @@ function Newinvoice({ setInvoices, invoices, setAddnewinvoice }) {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 placeholder="$ 99.00"
-                className="w-full bg-slate-800 h-10 rounded-sm mt-2 pl-3"
+                className={
+                  "w-full  h-10 rounded-lg mt-2 pl-3 " +
+                  (!isDark
+                    ? "bg-white border-2 border-slate-400"
+                    : " bg-slate-800")
+                }
               />
             </smalll>
           </aside>
-          <button className=" cursor-pointer w-full bg-slate-700 mt-5 py-4 rounded-full text-slate-300">
+          <button
+            className={
+              " cursor-pointer w-full mt-10 py-4 rounded-full text-slate-300 hover:bg-slate-400" +
+              (!isDark
+                ? "bg-white border-2 border-slate-400 text-slate-500 hover:bg-slate-700"
+                : " bg-slate-700")
+            }
+          >
             +Add New Item
           </button>
         </article>
         <div className="mt-7 sm:flex sm:justify-between">
           <button
             onClick={handleDiscardnewinvoice}
-            className=" cursor-pointer py-3 px-5 bg-white text-slate-600 text-sm rounded-full lg:text-lg lg:py-2"
+            className=" cursor-pointer py-3 px-5 bg-white border-2 hover:bg-slate-800 border-slate-400 bg-white text-slate-600 text-sm rounded-full lg:text-lg lg:py-2"
           >
             Discard
           </button>
           <div className="flex mt-4 items-center">
-            <button className="py-3 px-5 bg-slate-700 rounded-full mr-2 cursor-pointer">
+            <button
+              className={
+                "py-3 px-5  rounded-full mr-2 cursor-pointer hover:bg-slate-200 text-slate-400 " +
+                (!isDark
+                  ? "bg-white border-2 border-slate-400 hover:bg-slate-800"
+                  : "bg-slate-800")
+              }
+            >
               Save as Draft
             </button>
             <button
               onClick={handleSubmit}
-              className="py-3 px-5 bg-purple-600 rounded-full cursor-pointer"
+              className={
+                "py-3 px-5  rounded-full cursor-pointer hover:bg-slate-600 " +
+                (!isDark
+                  ? "bg-white bg-white border-2 border-slate-400 hover:bg-purple-600"
+                  : "bg-purple-600")
+              }
             >
               Save and Send
             </button>
