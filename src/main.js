@@ -1,5 +1,7 @@
 import { useState } from "react";
 import add from "./img/icon-plus.svg";
+import { FaAngleDown } from "react-icons/fa";
+import { FaCircle } from "react-icons/fa";
 function Main({
   invoices,
   setAddnewinvoice,
@@ -9,11 +11,17 @@ function Main({
   paid,
   setPaid,
   setIsPaid,
+  isPaid,
+  all,
   setAll,
   pending,
   setPending,
+  isPending,
   setIsPending,
   voices,
+  setIsDraft,
+  isDraft,
+  setDraft,
 }) {
   return (
     <div className=" pt-32 h-auto px-7 py-10 sm:px-20 lg:mx-auto lg:w-11/12 lg:pt-28 w-full xl:w-[70rem] xl:mx-[auto]">
@@ -24,11 +32,17 @@ function Main({
         setPaid={setPaid}
         paid={paid}
         setIsPaid={setIsPaid}
+        isPaid={isPaid}
+        all={all}
         setAll={setAll}
         pending={pending}
         setIsPending={setIsPending}
         setPending={setPending}
         voices={voices}
+        setDraft={setDraft}
+        setIsDraft={setIsDraft}
+        isPending={isPending}
+        isDraft={isDraft}
       />
       <Invoicebody
         invoices={invoices}
@@ -47,11 +61,16 @@ function Head({
   setPaid,
   paid,
   setIsPaid,
+  isPaid,
+  all,
   setAll,
   setPending,
-  pending,
+  isPending,
   setIsPending,
   voices,
+  setIsDraft,
+  isDraft,
+  setDraft,
 }) {
   function handleAddnewinvoice() {
     setAddnewinvoice(true);
@@ -61,20 +80,33 @@ function Head({
     setIsPaid(false);
     setIsPending(false);
     setFilter(false);
+    setIsDraft(false);
   }
   function handlepaid() {
     setIsPaid(true);
-    setPaid((paid) => voices.filter((voice) => voice.paid !== 0));
+    setPaid((paid) =>
+      voices.filter((voice) => voice.paid !== 0 && voice.draft !== 0)
+    );
     setAll(false);
     setFilter(false);
     setIsPending(false);
+    setIsDraft(false);
   }
   function handlepending() {
     setAll(false);
     setIsPaid(false);
     setIsPending(true);
     setFilter(false);
-    setPending((pending) => voices.filter((voice) => voice.paid !== 1));
+    setIsDraft(false);
+    setPending((pending) => voices.filter((voice) => voice.paid === 0));
+  }
+  function handleDraft() {
+    setAll(false);
+    setIsPaid(false);
+    setIsPending(false);
+    setFilter(false);
+    setIsDraft(true);
+    setDraft((draft) => voices.filter((voice) => voice.draft === 0));
   }
   const [filter, setFilter] = useState(false);
   function handlefilter() {
@@ -95,22 +127,33 @@ function Head({
         <p className="text-blue-700 mt-3">{invoices.length} invoices</p>
       </div>
       <div className="block lg:flex">
-        <div>
-          <p
-            onClick={handlefilter}
-            className={
-              "big " +
-              " text-slate-400 bg-transparent  outline-none ml-9 cursor-pointer"
-            }
-          >
-            Filter
-          </p>
+        <div className="lg:mt-6 lg:text-xl">
+          <div className="flex cursor-pointer" onClick={handlefilter}>
+            <p
+              className={
+                "big " +
+                " text-slate-400 bg-transparent  outline-none ml-9 cursor-pointer"
+              }
+            >
+              {all
+                ? "All"
+                : isPaid
+                ? "Paid"
+                : isPending
+                ? "Pending"
+                : isDraft
+                ? "Draft"
+                : "Filter "}
+            </p>
+            <FaAngleDown className="mt-2 ml-3 text-purple-500" />
+          </div>
           <div
             className={
               (filter ? "block " : "hidden  ") +
+              "absolute right-20 top-25  rounded-lg " +
               (!isDark
-                ? "text-slate-600 bg-white p-2 w-20 border-2 border-slate-600  "
-                : "text-slate-100 border-2 border-slate-300 p-2 w-20")
+                ? "text-slate-100 bg-slate-500 p-2 w-20 border-2 border-slate-600  "
+                : "text-slate-600 border-2 bg-white border-slate-300 p-2 w-20")
             }
             id="sub"
           >
@@ -123,7 +166,9 @@ function Head({
             <p onClick={handlepending} className="mb-2 cursor-pointer">
               Pending
             </p>
-            <p className="mb-2 cursor-pointer">Draft</p>
+            <p onClick={handleDraft} className="mb-2 cursor-pointer">
+              Draft
+            </p>
           </div>
         </div>
 
@@ -144,12 +189,23 @@ function Head({
 function Invoicebody({ invoices, setEachinvoice, setDetinvoice, isDark }) {
   return (
     <div>
+      {invoices.length === 0 && (
+        <p
+          className={
+            "text-center mt-32 text-xl " +
+            (!isDark ? "text-slate-800" : "text-slate-200")
+          }
+        >
+          No invoice at the moment
+        </p>
+      )}
       {invoices.map((invoice) => (
         <Body
           invoice={invoice}
           setEachinvoice={setEachinvoice}
           setDetinvoice={setDetinvoice}
           isDark={isDark}
+          key={invoice.id}
         />
       ))}
     </div>
@@ -159,6 +215,7 @@ function Body({ invoice, setEachinvoice, setDetinvoice, isDark }) {
   function handleEachinvoice() {
     setEachinvoice(true);
     setDetinvoice(invoice);
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }
   return (
     <div
@@ -195,20 +252,28 @@ function Body({ invoice, setEachinvoice, setDetinvoice, isDark }) {
         >
           $ {invoice.itemstotal}
         </p>
-        {invoice.paid === 0 ? (
+        {invoice.paid === 0 && invoice.draft !== 0 ? (
           <div
             className="flex float-right  py-2 px-3 pb-3 text-red-400 rounded-lg"
             id="red"
           >
-            <p className="text-xl">.</p>
+            <FaCircle className=" text-xs mt-4" />
             <p className=" ml-3 mt-1">Pending</p>
+          </div>
+        ) : invoice.draft === 0 && invoice.paid !== 0 ? (
+          <div
+            className="flex float-right text-slate-500 pb-2 py-1 px-3 rounded-lg"
+            id="draft"
+          >
+            <FaCircle className=" text-xs mt-4" />
+            <p className="mt-1 ml-3">Draft</p>
           </div>
         ) : (
           <div
-            className="flex float-right text-green-200 py-1 px-3 rounded-lg"
+            className="flex float-right text-green-500 py-1 px-3 rounded-lg"
             id="green"
           >
-            <p className="text-xl">.</p>
+            <FaCircle className=" text-xs mt-4" />
             <p className="mt-1 ml-3">Paid</p>
           </div>
         )}

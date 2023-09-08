@@ -1,4 +1,6 @@
 import back from "./img/icon-arrow-left.svg";
+import { FaCircle } from "react-icons/fa";
+
 function Invoice({ setEachinvoice, detinvoice, setInvoices, isDark }) {
   function handleBackeach() {
     setEachinvoice(false);
@@ -43,22 +45,37 @@ function Status({ detinvoice, setInvoices, setEachinvoice, isDark }) {
           : "bg-slate-800 ")
       }
     >
-      <p className="mt-3 text-lg lg:mt-1 lg:text-2xl">Status</p>
+      <p
+        className={
+          "mt-3 text-lg lg:mt-1 lg:text-2xl " +
+          (!isDark ? "text-slate-600" : "text-slate-200")
+        }
+      >
+        Status
+      </p>
       {detinvoice.paid === 0 ? (
         <div
           className="flex float-right text-red-500 py-1 px-3 pb-0 rounded-lg"
           id="red"
         >
-          <p className="text-xl">.</p>
-          <p className="mt-1 ml-3">Pending</p>
+          <FaCircle className=" text-xs mt-3" />
+          <p className="mt-1 ml-3 lg:text-xl">Pending</p>
+        </div>
+      ) : detinvoice.draft === 0 ? (
+        <div
+          className="flex float-right text-slate-500 pb-0  py-1 px-3 rounded-lg"
+          id="draft"
+        >
+          <FaCircle className=" text-xs mt-3" />
+          <p className="mt-1 ml-3 lg:text-xl">Draft</p>
         </div>
       ) : (
         <div
-          className="flex float-right text-green-200 py-1 px-3 rounded-lg"
+          className="flex float-right text-green-500 py-1 px-3 rounded-lg"
           id="green"
         >
-          <p className="text-xl">.</p>
-          <p className="mt-1 ml-3">Paid</p>
+          <FaCircle className=" text-xs mt-3" />
+          <p className="mt-1 ml-3 lg:text-xl">Paid</p>
         </div>
       )}
       <button
@@ -213,6 +230,7 @@ function Foot({ detinvoice, isDark }) {
   function handlepaid() {
     console.log(detinvoice.paid);
     detinvoice.paid = detinvoice.paid + 1;
+    detinvoice.draft = detinvoice.draft + 1;
     console.log(detinvoice.paid);
   }
   return (
@@ -226,7 +244,7 @@ function Foot({ detinvoice, isDark }) {
         Edit
       </button>
       <button
-        className="bg-red-400 px-7 py-3 text-slate-500 cursor-pointer rounded-full"
+        className="bg-red-400 px-7 py-3 text-slate-700 cursor-pointer rounded-full"
         onClick={handlepaid}
       >
         Mark as Paid

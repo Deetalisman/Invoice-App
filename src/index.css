@@ -31,6 +31,9 @@ input {
 #red {
   background-color: rgba(149, 28, 28, 0.3);
 }
+#draft {
+  background-color: rgba(168, 167, 167, 0.3);
+}
 #head {
   position: fixed;
   height: 100%;

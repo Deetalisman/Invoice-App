@@ -12,7 +12,7 @@ function Addnewinvoice({
   return (
     <div
       className={
-        "bg-slate-900 h-auto px-10 py-10 absolute top-20 w-full lg:top-0 lg:left-24 lg:w-fit " +
+        "bg-slate-900 h-auto px-10 py-10 absolute top-20 w-full lg:top-0 lg:left-24 lg:w-3/5 " +
         (!isDark && "bg-white")
       }
     >
@@ -65,6 +65,14 @@ function Newinvoice({
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     setAddnewinvoice(false);
   };
+  function handledraft() {
+    values.paid = values.paid + 5;
+    handleSubmit();
+  }
+  function handleSave() {
+    values.draft = values.draft + 5;
+    handleSubmit();
+  }
   const { values, handleBlur, handleChange, errors, handleSubmit, touched } =
     useFormik({
       initialValues: {
@@ -87,6 +95,7 @@ function Newinvoice({
         itemstotal: "",
         id: Math.floor(Math.random() * 66666),
         paid: 0,
+        draft: 0,
       },
       //validationSchema: basicSchema,
       onSubmit,
@@ -529,6 +538,8 @@ function Newinvoice({
           </button>
           <div className="flex mt-4 items-center">
             <button
+              onClick={handledraft}
+              id=""
               className={
                 "py-3 px-5  rounded-full mr-2 cursor-pointer hover:bg-slate-200 text-slate-400 " +
                 (!isDark
@@ -539,7 +550,7 @@ function Newinvoice({
               Save as Draft
             </button>
             <button
-              onClick={handleSubmit}
+              onClick={handleSave}
               className={
                 "py-3 px-5  rounded-full cursor-pointer hover:bg-slate-600 " +
                 (!isDark

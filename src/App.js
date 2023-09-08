@@ -16,12 +16,16 @@ function App() {
   const [all, setAll] = useState(false);
   const [pending, setPending] = useState([]);
   const [isPending, setIsPending] = useState(false);
+  const [draft, setDraft] = useState([]);
+  const [isDraft, setIsDraft] = useState(false);
 
   return (
     <div className="lg:flex">
       <Head setIsDark={setIsDark} isDark={isDark} />
       <Main
-        invoices={isPaid ? paid : isPending ? pending : invoices}
+        invoices={
+          isPaid ? paid : isPending ? pending : isDraft ? draft : invoices
+        }
         setAddnewinvoice={setAddnewinvoice}
         setEachinvoice={setEachinvoice}
         setDetinvoice={setDetinvoice}
@@ -30,11 +34,17 @@ function App() {
         setPaid={setPaid}
         paid={paid}
         setIsPaid={setIsPaid}
+        isPaid={isPaid}
+        all={all}
         setAll={setAll}
         setIsPending={setIsPending}
+        isPending={isPending}
         pending={pending}
         setPending={setPending}
         voices={voices}
+        setDraft={setDraft}
+        isDraft={isDraft}
+        setIsDraft={setIsDraft}
       />
       {eachinvoice && (
         <Invoice
