@@ -97,7 +97,7 @@ function Newinvoice({
         paid: 0,
         draft: 0,
       },
-      //validationSchema: basicSchema,
+      validationSchema: basicSchema,
       onSubmit,
     });
 
