@@ -12,9 +12,9 @@ function Invoice({ setEachinvoice, detinvoice, setInvoices, isDark }) {
         (!isDark ? "bg-white" : "bg-slate-900")
       }
     >
-      <div className="flex cursor-pointer" onClick={handleBackeach}>
+      <div className="flex cursor-pointer w-20" onClick={handleBackeach}>
         <img src={back} alt="back" className="h-4 mt-1" />
-        <p className={"ml-5 " + (!isDark ? "text-black" : "text-white")}>
+        <p className={"ml-2 " + (!isDark ? "text-black" : "text-white")}>
           Go back
         </p>
       </div>
@@ -55,27 +55,27 @@ function Status({ detinvoice, setInvoices, setEachinvoice, isDark }) {
       </p>
       {detinvoice.paid === 0 ? (
         <div
-          className="flex float-right text-red-500 py-1 px-3 pb-0 rounded-lg"
+          className="flex items-center justify-center  text-red-500 py-1 px-3 pb-0 rounded-lg"
           id="red"
         >
-          <FaCircle className=" text-xs mt-3" />
-          <p className="mt-1 ml-3 lg:text-xl">Pending</p>
+          <FaCircle className=" text-xs mt-0" />
+          <p className="mt-0 ml-3 lg:text-xl">Pending</p>
         </div>
       ) : detinvoice.draft === 0 ? (
         <div
-          className="flex float-right text-slate-500 pb-0  py-1 px-3 rounded-lg"
+          className="flex items-center justify-center  text-slate-400 pb-0  py-1 px-3 rounded-lg"
           id="draft"
         >
-          <FaCircle className=" text-xs mt-3" />
-          <p className="mt-1 ml-3 lg:text-xl">Draft</p>
+          <FaCircle className=" text-xs mt-0" />
+          <p className="mt-0 ml-3 lg:text-xl">Draft</p>
         </div>
       ) : (
         <div
-          className="flex float-right text-green-500 py-1 px-3 rounded-lg"
+          className="flex items-center justify-center  text-green-500 py-1 px-3 rounded-lg"
           id="green"
         >
-          <FaCircle className=" text-xs mt-3" />
-          <p className="mt-1 ml-3 lg:text-xl">Paid</p>
+          <FaCircle className=" text-xs " />
+          <p className=" ml-3 lg:text-xl">Paid</p>
         </div>
       )}
       <button
@@ -177,7 +177,7 @@ function Detail({ detinvoice, isDark }) {
               <p
                 className={
                   "text-xl font-semibold sm:text-2xl lg:mt-2 " +
-                  (!isDark ? "text-black" : "text-slate-100")
+                  (!isDark ? "text-slate-800" : "text-slate-100")
                 }
               >
                 {detinvoice.itemname}
@@ -188,7 +188,7 @@ function Detail({ detinvoice, isDark }) {
               <p
                 className={
                   "sm:text-xl lg:text-center font-semibold lg:mt-2 " +
-                  (!isDark ? "text-black" : "text-slate-100")
+                  (!isDark ? "text-slate-800" : "text-slate-100")
                 }
               >
                 {detinvoice.itemsquantity}
@@ -199,7 +199,7 @@ function Detail({ detinvoice, isDark }) {
               <p
                 className={
                   " sm:text-xl lg:text-center font-semibold lg:mt-2 " +
-                  (!isDark ? "text-black" : "text-slate-100")
+                  (!isDark ? "text-slate-800" : "text-slate-100")
                 }
               >
                 ${detinvoice.itemsprice}
@@ -208,7 +208,12 @@ function Detail({ detinvoice, isDark }) {
           </div>
           <div className="text-right">
             <p className="text-slate-400">Total</p>
-            <p className="text-xl mt-2 sm:text-2xl font-semibold lg:text-2xl">
+            <p
+              className={
+                "text-xl mt-2 sm:text-2xl font-semibold lg:text-2xl " +
+                (!isDark ? "text-slate-600" : "text-slate-100")
+              }
+            >
               $ {detinvoice.itemstotal}
             </p>
           </div>

@@ -24,7 +24,7 @@ function Main({
   setDraft,
 }) {
   return (
-    <div className=" pt-32 h-auto px-7 py-10 sm:px-20 lg:mx-auto lg:w-11/12 lg:pt-28 w-full xl:w-[70rem] xl:mx-[auto]">
+    <div className=" pt-32 h-auto px-7 py-10 sm:px-20 lg:mx-auto lg:w-11/12 lg:pt-24 w-full xl:w-[70rem] xl:mx-[auto]">
       <Head
         invoices={invoices}
         setAddnewinvoice={setAddnewinvoice}
@@ -127,8 +127,8 @@ function Head({
         <p className="text-blue-700 mt-3">{invoices.length} invoices</p>
       </div>
       <div className="block lg:flex">
-        <div className="lg:mt-6 lg:text-xl">
-          <div className="flex cursor-pointer" onClick={handlefilter}>
+        <div className="lg:mt-6 lg:text-xl relative">
+          <div className="flex cursor-pointer " onClick={handlefilter}>
             <p
               className={
                 "big " +
@@ -150,10 +150,10 @@ function Head({
           <div
             className={
               (filter ? "block " : "hidden  ") +
-              "absolute right-20 top-25  rounded-lg " +
+              "absolute right-20 top-25  rounded-lg px-2 lg:-right-9 " +
               (!isDark
-                ? "text-slate-100 bg-slate-500 p-2 w-20 border-2 border-slate-600  "
-                : "text-slate-600 border-2 bg-white border-slate-300 p-2 w-20")
+                ? "text-slate-100 bg-slate-500 p-2 w-23 border-2 border-slate-600  "
+                : "text-slate-600 border-2 bg-white border-slate-300 p-2 w-23")
             }
             id="sub"
           >
@@ -221,7 +221,7 @@ function Body({ invoice, setEachinvoice, setDetinvoice, isDark }) {
     <div
       onClick={handleEachinvoice}
       className={
-        "mt-7 items-center bg-slate-800 p-4 shadow-lg shadow-slate-600 rounded-md cursor-pointer lg:flex lg:justify-between lg:py-10 lg:px-10 lg:text-2xl " +
+        "mt-7 items-center hover:border-2 hover:border-purple-500 bg-slate-800 p-4 shadow-md shadow-slate-600 rounded-md cursor-pointer lg:flex lg:justify-between lg:py-10 lg:px-10 lg:text-2xl " +
         (!isDark && "bg-white shadow-md")
       }
     >
@@ -243,10 +243,10 @@ function Body({ invoice, setEachinvoice, setDetinvoice, isDark }) {
         </div>
         <p className="text-slate-500 text-center">{invoice.clientname}</p>
       </div>
-      <div className="flex justify-between">
+      <div className="flex justify-between w-1/3">
         <p
           className={
-            "font-semibold text-xl tracking-wider mt-2  lg:text-2xl lg:mt-3 lg:mr-10 " +
+            "font-semibold text-xl tracking-wider mt-2  lg:text-2xl lg:mt-3  " +
             (!isDark ? "text-slate-600" : "text-white")
           }
         >
@@ -257,24 +257,24 @@ function Body({ invoice, setEachinvoice, setDetinvoice, isDark }) {
             className="flex float-right  py-2 px-3 pb-3 text-red-400 rounded-lg"
             id="red"
           >
-            <FaCircle className=" text-xs mt-4" />
+            <FaCircle className=" text-xs mt-3 lg:mt-4" />
             <p className=" ml-3 mt-1">Pending</p>
           </div>
         ) : invoice.draft === 0 && invoice.paid !== 0 ? (
           <div
-            className="flex float-right text-slate-500 pb-2 py-1 px-3 rounded-lg"
+            className="flex float-right text-slate-400 pb-2 py-1 px-3 rounded-lg"
             id="draft"
           >
-            <FaCircle className=" text-xs mt-4" />
-            <p className="mt-1 ml-3">Draft</p>
+            <FaCircle className=" text-xs mt-2" />
+            <p className=" ml-3">Draft</p>
           </div>
         ) : (
           <div
             className="flex float-right text-green-500 py-1 px-3 rounded-lg"
             id="green"
           >
-            <FaCircle className=" text-xs mt-4" />
-            <p className="mt-1 ml-3">Paid</p>
+            <FaCircle className=" text-xs mt-2" />
+            <p className="mt-0 ml-3">Paid</p>
           </div>
         )}
       </div>

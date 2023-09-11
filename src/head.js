@@ -20,7 +20,7 @@ function Head({ isDark, setIsDark }) {
       id="head"
       className="bg-slate-600 flex z-10 justify-between  lg:w-25 lg:flex lg:flex-col lg:mr-10 lg:justify-between lg:absolute lg:h-full "
     >
-      <div className=" h-15 bg-purple-500 p-7 rounded-r-3xl lg:p-4 lg:h-20 lg:pl-6">
+      <div className=" h-15 bg-purple-500 p-7 rounded-r-3xl lg:p-4 lg:h-18 lg:pl-6">
         <img
           src={Logo}
           alt="man"

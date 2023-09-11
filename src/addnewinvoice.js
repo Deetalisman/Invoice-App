@@ -173,7 +173,7 @@ function Newinvoice({
                 <p className="text-red-300 text-xs">{errors.postcode}</p>
               )}
             </smalll>
-            <smalll className="w-2/5">
+            <smalll className="w-2/5 mt-3">
               <label className="text-slate-400 text-base">Country</label>
               <br></br>
               <input
@@ -382,9 +382,9 @@ function Newinvoice({
                     : " bg-slate-800 text-white")
                 }
               >
-                <option>Next 7 days</option>
-                <option>Next 20 days</option>
-                <option>Next 30 days</option>
+                <option value="Next 7 Days">Next 7 days</option>
+                <option value="Next 20 Days">Next 20 days</option>
+                <option value="Next 30 Days">Next 30 days</option>
               </select>
               {errors.payment && touched.payment && (
                 <p className="text-red-300 text-xs text-right">
@@ -464,7 +464,7 @@ function Newinvoice({
                     ? "error"
                     : null) +
                   (!isDark
-                    ? "bg-white border-2 border-slate-400"
+                    ? "bg-white border-2 border-slate-400 text-slate-600"
                     : " bg-slate-800")
                 }
               />
@@ -484,10 +484,10 @@ function Newinvoice({
                 onBlur={handleBlur}
                 onChange={handleChange}
                 className={
-                  "w-full  h-10 rounded-lg mt-2 " +
+                  "w-full  h-10 rounded-lg mt-2  " +
                   (errors.itemsprice && touched.itemsprice ? "error" : null) +
                   (!isDark
-                    ? "bg-white border-2 border-slate-400"
+                    ? "bg-white border-2 border-slate-400 text-slate-600"
                     : " bg-slate-800")
                 }
               />
@@ -512,7 +512,7 @@ function Newinvoice({
                 className={
                   "w-full  h-10 rounded-lg mt-2 pl-3 " +
                   (!isDark
-                    ? "bg-white border-2 border-slate-400"
+                    ? "bg-white border-2 border-slate-400 text-slate-600"
                     : " bg-slate-800")
                 }
               />
