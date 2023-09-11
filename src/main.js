@@ -243,7 +243,7 @@ function Body({ invoice, setEachinvoice, setDetinvoice, isDark }) {
         </div>
         <p className="text-slate-500 text-center">{invoice.clientname}</p>
       </div>
-      <div className="flex justify-between w-1/3">
+      <div className="flex justify-between lg:w-1/3">
         <p
           className={
             "font-semibold text-xl tracking-wider mt-2  lg:text-2xl lg:mt-3  " +
